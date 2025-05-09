@@ -1,0 +1,98 @@
+<div class="max-w-2xl mx-auto">
+  <h2 class="text-2xl font-semibold text-gray-900 mb-6">Checkout</h2>
+
+  <div *ngIf="!authService.isLoggedIn" class="mb-8">
+    <div class="flex justify-between mb-4">
+      <app-button variant="primary" (onClick)="showLoginModal = true">Log In</app-button>
+      <app-button variant="secondary" (onClick)="showRegisterModal = true">Create Account</app-button>
+      <app-button variant="outline" (onClick)="continueAsGuest()">Continue as Guest</app-button>
+    </div>
+  </div>
+
+  <form *ngIf="showForm || authService.isLoggedIn" (ngSubmit)="submitPurchase()" class="space-y-6">
+    <div>
+      <h3 class="text-lg font-medium">Billing Information</h3>
+      <app-input
+        label="Cardholder Name"
+        [(ngModel)]="billing.cardholderName"
+        name="cardholderName"
+        [required]="true"
+      ></app-input>
+      <app-input
+        label="Card Number"
+        [(ngModel)]="billing.cardNumber"
+        name="cardNumber"
+        [required]="true"
+      ></app-input>
+      <div class="grid grid-cols-2 gap-4">
+        <app-input
+          label="Expiration Date"
+          [(ngModel)]="billing.expiry"
+          name="expiry"
+          placeholder="MM/YY"
+          [required]="true"
+        ></app-input>
+        <app-input
+          label="CVV"
+          [(ngModel)]="billing.cvv"
+          name="cvv"
+          [required]="true"
+        ></app-input>
+      </div>
+    </div>
+    <div class="flex justify-end">
+      <app-button
+        type="submit"
+        variant="primary"
+        size="lg"
+        [isLoading]="isLoading"
+        [disabled]="!isFormValid">
+        Complete Purchase
+      </app-button>
+    </div>
+  </form>
+
+  <app-login [showLoginModal]="showLoginModal"></app-login>
+
+  <app-modal
+    [isOpen]="showRegisterModal"
+    title="Create Account"
+    (close)="showRegisterModal = false"
+    (confirm)="register()"
+    confirmText="Register"
+    [confirmDisabled]="!registerForm.email || !registerForm.password || registerForm.password !== registerForm.confirmPassword">
+    <form class="space-y-4">
+      <app-input
+        label="Email"
+        type="email"
+        [(ngModel)]="registerForm.email"
+        name="email"
+        [required]="true"
+      ></app-input>
+      <app-input
+        label="First Name"
+        [(ngModel)]="registerForm.firstName"
+        name="firstName"
+      ></app-input>
+      <app-input
+        label="Last Name"
+        [(ngModel)]="registerForm.lastName"
+        name="lastName"
+      ></app-input>
+      <app-input
+        label="Password"
+        type="password"
+        [(ngModel)]="registerForm.password"
+        name="password"
+        [required]="true"
+      ></app-input>
+      <app-input
+        label="Confirm Password"
+        type="password"
+        [(ngModel)]="registerForm.confirmPassword"
+        name="confirmPassword"
+        [required]="true"
+      ></app-input>
+    </form>
+  </app-modal>
+</div>

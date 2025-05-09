@@ -1,0 +1,58 @@
+<div class="space-y-6">
+  <h2 class="text-xl font-semibold text-gray-900">Select Tickets</h2>
+  <div *ngIf="event?.ticket_types && event.ticket_types.length > 0; else noTicketTypes" class="space-y-4">
+      <div *ngFor="let ticketType of event?.ticket_types || []; let i = index" class="border rounded-lg p-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-lg font-medium">{{ ticketType.name }}</h3>
+            <p class="text-sm text-gray-600">{{ ticketType.description }}</p>
+            <p class="text-sm text-gray-600">Price: ${{ ticketType.price }}</p>
+            <p class="text-sm text-gray-600">Available: {{ ticketType.available }}</p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <label [for]="'quantity-' + i" class="text-sm font-medium">Quantity:</label>
+            <select
+              [id]="'quantity-' + i"
+              [(ngModel)]="quantities[ticketType.id]"
+              (ngModelChange)="handleInputChange()" class="border rounded-md p-2">
+              <option *ngFor="let num of [0,1,2,3,4,5]" [value]="num">{{ num }}</option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="quantities[ticketType.id] > 0" class="mt-4 space-y-4">
+          <div *ngFor="let attendee of getAttendeesArray(ticketType.id); let j = index">
+            <h4 class="text-sm font-medium">Attendee {{ j + 1 }}</h4>
+            <app-input
+              label="Name"
+              [(ngModel)]="attendees[ticketType.id][j].name"
+              (ngModelChange)="handleInputChange()" [required]="true"
+            ></app-input>
+            <app-input
+              label="Email"
+              type="email"
+              [(ngModel)]="attendees[ticketType.id][j].email"
+              (ngModelChange)="handleInputChange()" [required]="true"
+            ></app-input>
+          </div>
+        </div>
+      </div>
+  </div>
+   <ng-template #noTicketTypes>
+      <div *ngIf="event && !event.ticket_types?.length">
+         <p>No ticket types available for this event.</p>
+      </div>
+       <div *ngIf="!event">
+         <p>Loading event details...</p>
+      </div>
+   </ng-template>
+
+
+  <div class="flex justify-end">
+    <app-button
+      variant="primary"
+      size="lg"
+      [disabled]="!hasSelection"
+      (onClick)="proceedToCheckout()"> Proceed to Checkout
+    </app-button>
+  </div>
+</div>

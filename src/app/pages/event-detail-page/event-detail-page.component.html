@@ -1,0 +1,12 @@
+<div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  <div *ngIf="event" class="space-y-8">
+    <div>
+      <img [src]="event.imageUrl" [alt]="event.name" class="w-full h-64 object-cover rounded-lg">
+      <h1 class="text-3xl font-bold text-gray-900 mt-4">{{ event.name }}</h1>
+      <p class="text-sm text-gray-600">{{ event.date | date:'mediumDate' }} at {{ event.time }}</p>
+      <p class="text-sm text-gray-600">{{ event.location }}</p>
+      <p class="text-gray-700 mt-2">{{ event.description }}</p>
+    </div>
+    <app-ticket-selection [event]="event" (onCheckout)="handleCheckout($event)"></app-ticket-selection>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="space-y-6">
+  <div>
+    <app-input
+      label="Event Name"
+      formControlName="name"
+      [required]="true"
+      [error]="eventForm.get('name')?.touched && eventForm.get('name')?.invalid ? 'Event name is required' : ''"
+    ></app-input>
+  </div>
+  <div>
+    <app-input
+      label="Description"
+      formControlName="description"
+      [required]="true"
+      [error]="eventForm.get('description')?.touched && eventForm.get('description')?.invalid ? 'Description is required' : ''"
+    ></app-input>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <app-input
+      label="Date"
+      type="date"
+      formControlName="date"
+      [required]="true"
+      [error]="eventForm.get('date')?.touched && eventForm.get('date')?.invalid ? 'Date is required' : ''"
+    ></app-input>
+    <app-input
+      label="Time"
+      formControlName="time"
+      [required]="true"
+      [error]="eventForm.get('time')?.touched && eventForm.get('time')?.invalid ? 'Time is required' : ''"
+    ></app-input>
+  </div>
+  <div>
+    <app-input
+      label="Location"
+      formControlName="location"
+      [required]="true"
+      [error]="eventForm.get('location')?.touched && eventForm.get('location')?.invalid ? 'Location is required' : ''"
+    ></app-input>
+  </div>
+  <div>
+    <app-input
+      label="Image URL"
+      formControlName="imageUrl"
+      [required]="true"
+      [error]="eventForm.get('imageUrl')?.touched && eventForm.get('imageUrl')?.invalid ? 'Image URL is required' : ''"
+    ></app-input>
+  </div>
+
+  <div>
+    <h3 class="text-lg font-medium mb-4">Ticket Types</h3>
+    <div formArrayName="ticketTypes" class="space-y-4">
+      <div *ngFor="let ticketType of ticketTypes.controls; let i = index" [formGroupName]="i" class="border rounded-lg p-4">
+        <div class="grid grid-cols-2 gap-4">
+          <app-input
+            label="Ticket Name"
+            formControlName="name"
+            [required]="true"
+            [error]="ticketType.get('name')?.touched && ticketType.get('name')?.invalid ? 'Ticket name is required' : ''"
+          ></app-input>
+          <app-input
+            label="Price"
+            type="number"
+            formControlName="price"
+            [required]="true"
+            [error]="ticketType.get('price')?.touched && ticketType.get('price')?.invalid ? 'Price is required' : ''"
+          ></app-input>
+        </div>
+        <app-input
+          label="Description"
+          formControlName="description"
+          [required]="true"
+          [error]="ticketType.get('description')?.touched && ticketType.get('description')?.invalid ? 'Description is required' : ''"
+        ></app-input>
+        <app-input
+          label="Available Quantity"
+          type="number"
+          formControlName="available"
+          [required]="true"
+          [error]="ticketType.get('available')?.touched && ticketType.get('available')?.invalid ? 'Quantity is required' : ''"
+        ></app-input>
+        <div class="mt-2">
+          <app-button
+            variant="danger"
+            size="sm"
+            (onClick)="removeTicketType(i)">
+            Remove Ticket Type
+          </app-button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <app-button
+        variant="secondary"
+        size="md"
+        (onClick)="addTicketType()">
+        Add Ticket Type
+      </app-button>
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-4">
+    <app-button
+      type="button"
+      variant="outline"
+      size="md"
+      (onClick)="cancel.emit()">
+      Cancel
+    </app-button>
+    <app-button
+      type="submit"
+      variant="primary"
+      size="md"
+      [disabled]="eventForm.invalid"
+      [isLoading]="isLoading">
+      {{ isEditMode ? 'Update Event' : 'Create Event' }}
+    </app-button>
+  </div>
+</form>

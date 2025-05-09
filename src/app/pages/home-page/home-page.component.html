@@ -1,0 +1,12 @@
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Discover Events</h1>
+    <app-input
+      label="Search Events"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="searchEvents()"
+      placeholder="Search by event name or location"
+    ></app-input>
+  </div>
+  <app-event-list [events]="events"></app-event-list>
+</div>

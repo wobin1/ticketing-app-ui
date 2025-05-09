@@ -1,0 +1,34 @@
+<div class="max-w-4xl mx-auto py-8">
+  <h2 class="text-2xl font-semibold text-gray-900 mb-6">My Tickets</h2>
+  <div class="space-y-6">
+    <div *ngFor="let ticket of tickets" class="border rounded-lg p-4 flex justify-between">
+      <div>
+        <h3 class="text-lg font-medium">Event ID: {{ ticket.event_id }}</h3>
+        <p class="text-sm text-gray-600">Ticket Type: {{ ticket.ticket_type_id }}</p>
+        <p class="text-sm text-gray-600">Attendee: {{ ticket.attendee_name }} ({{ ticket.attendee_email }})</p>
+        <p class="text-sm text-gray-600">Status: {{ ticket.status }}</p>
+        <p class="text-sm text-gray-600">Purchase Date: {{ ticket.purchase_date | date:'medium' }}</p>
+        <app-button
+          variant="primary"
+          size="sm"
+          (onClick)="openQrModal(ticket)">
+          View QR Code
+        </app-button>
+      </div>
+      <div>
+        <img *ngIf="ticket.qrCode" [src]="ticket.qrCode" alt="QR Code" class="w-32 h-32">
+        <p *ngIf="!ticket.qrCode" class="text-sm text-gray-500">QR Code not available</p>
+      </div>
+    </div>
+  </div>
+
+  <app-modal
+    [isOpen]="showQrModal"
+    title="Ticket QR Code"
+    (close)="showQrModal = false"
+    [showFooter]="false">
+    <div class="flex justify-center">
+      <img [src]="selectedTicket?.qrCode" alt="QR Code" class="w-64 h-64">
+    </div>
+  </app-modal>
+</div>
