@@ -1,0 +1,41 @@
+<app-modal
+    [isOpen]="showRegisterModal"
+    title="Create Account"
+    (close)="showRegisterModal = false"
+    (confirm)="register()"
+    confirmText="Register"
+    [confirmDisabled]="!registerForm.email || !registerForm.password || registerForm.password !== registerForm.confirmPassword">
+    <form class="space-y-4">
+      <app-input
+        label="Email"
+        type="email"
+        [(ngModel)]="registerForm.email"
+        name="email"
+        [required]="true"
+      ></app-input>
+      <app-input
+        label="First Name"
+        [(ngModel)]="registerForm.firstName"
+        name="firstName"
+      ></app-input>
+      <app-input
+        label="Last Name"
+        [(ngModel)]="registerForm.lastName"
+        name="lastName"
+      ></app-input>
+      <app-input
+        label="Password"
+        type="password"
+        [(ngModel)]="registerForm.password"
+        name="password"
+        [required]="true"
+      ></app-input>
+      <app-input
+        label="Confirm Password"
+        type="password"
+        [(ngModel)]="registerForm.confirmPassword"
+        name="confirmPassword"
+        [required]="true"
+      ></app-input>
+    </form>
+  </app-modal>

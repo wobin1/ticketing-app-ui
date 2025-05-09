@@ -29,8 +29,8 @@ export class EventFormComponent {
       date: ['', Validators.required],
       time: ['', Validators.required],
       location: ['', Validators.required],
-      imageUrl: ['', Validators.required],
-      ticketTypes: this.fb.array([])
+      image_url: ['', Validators.required],
+      ticket_types: this.fb.array([])  // Changed from ticketTypes to ticket_types
     });
 
     if (this.event) {
@@ -41,16 +41,16 @@ export class EventFormComponent {
         date: this.event.date.toISOString().split('T')[0],
         time: this.event.time,
         location: this.event.location,
-        imageUrl: this.event.imageUrl
+        image_url: this.event.image_url
       });
-      this.event.ticket_types.forEach(ticket_types => {
-        this.addTicketType(ticket_types);
+      this.event.ticket_types.forEach((ticketTypes: TicketType | undefined) => {
+        this.addTicketType(ticketTypes);
       });
     }
   }
 
   get ticketTypes(): FormArray {
-    return this.eventForm.get('ticketTypes') as FormArray;
+    return this.eventForm.get('ticket_types') as FormArray;  // Changed from ticketTypes to ticket_types
   }
 
   addTicketType(ticketType?: TicketType) {
@@ -74,7 +74,7 @@ export class EventFormComponent {
       const eventData: Partial<Event> = {
         ...formValue,
         date: new Date(formValue.date),
-        ticketTypes: formValue.ticketTypes.map((tt: any) => ({
+        ticket_types: formValue.ticket_types.map((tt: any) => ({  // Changed from ticketTypes
           id: tt.id,
           name: tt.name,
           description: tt.description,

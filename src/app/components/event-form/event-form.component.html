@@ -41,15 +41,15 @@
   <div>
     <app-input
       label="Image URL"
-      formControlName="imageUrl"
+      formControlName="image_url"
       [required]="true"
-      [error]="eventForm.get('imageUrl')?.touched && eventForm.get('imageUrl')?.invalid ? 'Image URL is required' : ''"
+      [error]="eventForm.get('image_url')?.touched && eventForm.get('image_url')?.invalid ? 'Image URL is required' : ''"
     ></app-input>
   </div>
 
   <div>
     <h3 class="text-lg font-medium mb-4">Ticket Types</h3>
-    <div formArrayName="ticketTypes" class="space-y-4">
+    <div formArrayName="ticket_types" class="space-y-4">
       <div *ngFor="let ticketType of ticketTypes.controls; let i = index" [formGroupName]="i" class="border rounded-lg p-4">
         <div class="grid grid-cols-2 gap-4">
           <app-input

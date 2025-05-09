@@ -13,6 +13,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { LoginComponent } from './components/login/login.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 
 export const routes: Routes = [
   {
@@ -37,7 +38,10 @@ export const routes: Routes = [
       {
         path: 'login',
         component: LoginPageComponent,
-        // canActivate: [AdminGuard]
+      },
+      {
+        path: 'signup',
+        component: SignupPageComponent,
       },
       {
         path: 'admin/events/new',

@@ -16,8 +16,8 @@
         </app-button>
       </div>
       <div>
-        <img *ngIf="ticket.qrCode" [src]="ticket.qrCode" alt="QR Code" class="w-32 h-32">
-        <p *ngIf="!ticket.qrCode" class="text-sm text-gray-500">QR Code not available</p>
+        <img *ngIf="ticket.qr_code" [src]="ticket.qr_code" alt="QR Code" class="w-32 h-32">
+        <p *ngIf="!ticket.qr_code" class="text-sm text-gray-500">QR Code not available</p>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
     (close)="showQrModal = false"
     [showFooter]="false">
     <div class="flex justify-center">
-      <img [src]="selectedTicket?.qrCode" alt="QR Code" class="w-64 h-64">
+      <img [src]="selectedTicket?.qr_code" alt="QR Code" class="w-64 h-64">
     </div>
   </app-modal>
 </div>

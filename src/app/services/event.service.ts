@@ -10,6 +10,14 @@ import { environment } from '../../environments/environment.development';
 export class EventService {
   private http = inject(HttpClient);
   private baseUrl:any = `${environment.baseUrl}/events`;
+  private token:any;
+
+
+
+  constructor(){
+    this.token = localStorage.getItem('token');
+    console.log('Token from localStorage:', this.token);
+  }
 
   mockData:any = [
     {
@@ -148,53 +156,30 @@ export class EventService {
 
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>(this.baseUrl);
-    // return of(this.mockData);
   }
 
   getEvent(id: string): Observable<Event> {
     return this.http.get<Event>(`${this.baseUrl}/${id}`);
-    // const event = this.mockData.find((e: { id: any; }) => e.id === id);
-    // return of(event!);
   }
 
   searchEvents(query: string): Observable<Event[]> {
     return this.http.get<Event[]>(`${this.baseUrl}/search`, { params: { query } });
-    // const filteredEvents = this.mockData.filter((event: Event) =>
-    //   event.name.toLowerCase().includes(query.toLowerCase()) ||
-    //   event.description.toLowerCase().includes(query.toLowerCase())
-    // );
-    // return of(filteredEvents);
   }
 
 
   createEvent(event: Partial<Event>): Observable<Event> {
-    return this.http.post<Event>(this.baseUrl, event);
-    // const newEvent = {
-    //   id: `evt_${Date.now()}`,
-    //   ...event
-    // } as Event;
-    // this.mockData.push(newEvent);
-    // return of(newEvent);
+    const headers = { 'Authorization': `Bearer ${this.token}` };
+    return this.http.post<Event>(this.baseUrl, event, { headers });
   }
 
   updateEvent(id: string, event: Partial<Event>): Observable<Event> {
-    return this.http.put<Event>(`${this.baseUrl}/${id}`, event);
-    // const index = this.mockData.findIndex((e: Event) => e.id === id);
-    // if (index !== -1) {
-    //   this.mockData[index] = { ...this.mockData[index], ...event };
-    //   return of(this.mockData[index]);
-    // }
-    // throw new Error('Event not found');
+    const headers = { 'Authorization': `Bearer ${this.token}` };
+    return this.http.put<Event>(`${this.baseUrl}/${id}`, event, { headers });
   }
 
   deleteEvent(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
-    // const index = this.mockData.findIndex((e: Event) => e.id === id);
-    // if (index !== -1) {
-    //   this.mockData.splice(index, 1);
-    //   return of(void 0);
-    // }
-    // throw new Error('Event not found');
+    const headers = { 'Authorization': `Bearer ${this.token}` };
+    return this.http.delete<void>(`${this.baseUrl}/${id}`, { headers });
   }
 }
 

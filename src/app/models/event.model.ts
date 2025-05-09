@@ -5,7 +5,7 @@ export interface Event {
   date: Date;
   time: string;
   location: string;
-  imageUrl: string;
+  image_url: string;
   ticket_types: TicketType[];
 }
 

@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User, AuthResponse } from '../models/user.model';
 import { environment } from '../../environments/environment.development';
 import { StorageService } from './storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class AuthService {
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
+
+  router = inject(Router);
 
   constructor() {
     console.log('AuthService initialized');
@@ -56,6 +59,7 @@ export class AuthService {
     this.storageService.removeItem('user');
     this.storageService.removeItem('token');
     this.currentUserSubject.next(null);
+    this.router.navigate(['/']);
   }
 
   private handleAuthResponse(response: AuthResponse): void {
