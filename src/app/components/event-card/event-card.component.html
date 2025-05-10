@@ -1,15 +1,17 @@
-<div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
-  <img [src]="event.image_url" [alt]="event.name" class="w-full h-48 object-cover">
-  <div class="p-4">
-    <h3 class="text-lg font-semibold text-gray-900">{{ event.name }}</h3>
-    <p class="text-sm text-gray-600 mt-1">{{ event.date | date:'mediumDate' }} at {{ event.time }}</p>
-    <p class="text-sm text-gray-600">{{ event.location }}</p>
-    <p class="text-sm text-gray-500 mt-2 line-clamp-2">{{ event.description }}</p>
-    <div class="mt-4">
+<div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer">
+  <img [src]="event.image_url" [alt]="event.name" class="w-full h-56 object-cover">
+  <div class="p-5">
+    <h3 class="text-xl font-semibold text-white truncate">{{ event.name }}</h3>
+    <p class="text-sm text-gray-400 mt-1">{{ event.date | date:'mediumDate' }} at {{ event.time }}</p>
+    <p class="text-sm text-gray-400">{{ event.location }}</p>
+    <p class="text-sm text-gray-300 mt-3 line-clamp-3">{{ event.description }}</p>
+    <div class="mt-5">
       <app-button
         [routerLink]="['/events', event.id]"
         variant="primary"
-        size="md">
+        size="md"
+        class="w-full text-center"
+      >
         View Details
       </app-button>
     </div>

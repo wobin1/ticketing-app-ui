@@ -1,0 +1,88 @@
+/* In app-modal.component.scss */
+
+:host {
+  /* Add a class to the host element in app-modal.component.html */
+  /* e.g., <div *ngIf="isOpen" class="modal-container"> */
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background for overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50; /* Ensure the modal is above other content */
+  backdrop-filter: blur(5px); /* Optional: Adds a blur effect to the background */
+  animation: fadeInOverlay 0.3s ease-out; /* Simple fade-in animation for the overlay */
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #1f2937, #111827); /* Subtle gradient dark background */
+  color: #d1d5db; /* Light text color for modal content */
+  border-radius: 0.5rem; /* Rounded corners */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  padding: 1.5rem; /* Padding inside the modal content */
+  max-width: 90%; /* Responsive max width */
+  width: 400px; /* Fixed width for desktop, adjust as needed */
+  z-index: 60; /* Above the overlay */
+  overflow-y: auto; /* Add scrolling for tall content */
+  max-height: 90vh; /* Max height relative to viewport */
+  display: flex;
+  flex-direction: column;
+  animation: fadeInModal 0.3s ease-out; /* Simple fade-in animation for the modal */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #4b5563; /* Darker border below header */
+  padding-bottom: 1rem; /* Spacing below header */
+  margin-bottom: 1.5rem; /* Spacing before body */
+}
+
+.modal-header h3 {
+  font-size: 1.25rem; /* Title font size */
+  font-weight: 600; /* Title font weight */
+  color: #f9fafb; /* White color for the title */
+}
+
+.modal-header button {
+  background: none;
+  border: none;
+  color: #9ca3af; /* Light gray color for close button */
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out; /* Smooth color transition on hover */
+}
+
+.modal-header button:hover {
+  color: #d1d5db; /* Lighter gray on hover */
+}
+
+.modal-body {
+  margin-bottom: 1.5rem; /* Spacing after body */
+  flex-grow: 1; /* Allows the body to take up available vertical space */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Align footer content to the right */
+  border-top: 1px solid #4b5563; /* Darker border above footer */
+  padding-top: 1rem; /* Spacing above footer content */
+}
+
+/* Keyframes for animations */
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

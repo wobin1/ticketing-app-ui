@@ -1,12 +1,22 @@
-<div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-  <div *ngIf="event" class="space-y-8">
-    <div>
-      <img [src]="event.image_url" [alt]="event.name" class="w-full h-64 object-cover rounded-lg">
-      <h1 class="text-3xl font-bold text-gray-900 mt-4">{{ event.name }}</h1>
-      <p class="text-sm text-gray-600">{{ event.date | date:'mediumDate' }} at {{ event.time }}</p>
-      <p class="text-sm text-gray-600">{{ event.location }}</p>
-      <p class="text-gray-700 mt-2">{{ event.description }}</p>
+<div class="min-h-screen bg-gray-900 text-gray-200 py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+    <div *ngIf="event" class="space-y-8 bg-gray-800 p-6 rounded-lg shadow-lg">
+      <div>
+        <img [src]="event.image_url" [alt]="event.name" class="w-full h-72 object-cover rounded-lg shadow-md">
+
+        <h1 class="text-3xl font-bold text-white mt-6">{{ event.name }}</h1>
+
+
+        <p class="text-sm text-gray-400 mt-1">{{ event.date | date:'mediumDate' }} at {{ event.time }}</p>
+        <p class="text-sm text-gray-400">{{ event.location }}</p>
+
+
+        <p class="text-base text-gray-300 mt-4 leading-relaxed">{{ event.description }}</p>
+      </div>
+      <app-ticket-selection [event]="event" (onCheckout)="handleCheckout($event)"></app-ticket-selection>
     </div>
-    <app-ticket-selection [event]="event" (onCheckout)="handleCheckout($event)"></app-ticket-selection>
+    <div *ngIf="!event" class="text-center text-gray-400 py-12">
+      <p>Event not found.</p>
+    </div>
   </div>
 </div>
