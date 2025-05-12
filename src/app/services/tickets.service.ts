@@ -29,6 +29,12 @@ export class TicketService {
     return this.http.post<Ticket[]>(`${this.baseUrl}/purchase`, purchase, { headers });
   }
 
+  purchaseTicketsAsGuest(purchase: TicketPurchase): Observable<Ticket[]> {
+    let guestToken = localStorage.getItem('guestToken');
+    const headers = { 'Authorization': `Bearer ${guestToken}` };
+    return this.http.post<Ticket[]>(`${this.baseUrl}/purchase`, purchase, { headers });
+  }
+
   verifyTicket(ticketId: string): Observable<{valid: boolean, message: string}> {
     const headers = { 'Authorization': `Bearer ${this.token}` };
     return this.http.get<{valid: boolean, message: string}>(`${this.baseUrl}/verify/${ticketId}`, { headers });

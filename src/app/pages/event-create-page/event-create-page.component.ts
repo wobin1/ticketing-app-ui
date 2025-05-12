@@ -24,9 +24,9 @@ export class EventCreatePageComponent {
         this.isLoading = false;
         this.router.navigate(['/admin']);
       },
-      error: () => {
+      error: (error) => {
         this.isLoading = false;
-        alert('Failed to create event');
+        alert(`Error: ${error.message || 'Failed to create event'}`);
       }
     });
   }

@@ -30,6 +30,7 @@ export class CheckoutComponent {
   showLoginModal = false;
   showRegisterModal = false;
   isLoading = false;
+  isGuest:boolean = false;
 
   user = { email: '', firstName: '', lastName: '', password: '', };
   billing = { cardholderName: '', cardNumber: '', expiry: '', cvv: '' };
@@ -42,6 +43,7 @@ export class CheckoutComponent {
 
   continueAsGuest() {
     this.showForm = true;
+    this.isGuest = true;
   }
 
 
@@ -50,10 +52,9 @@ export class CheckoutComponent {
   submitPurchase() {
     this.isLoading = true;
 
-
-
     this.ticketService.purchaseTickets(this.purchaseData).subscribe({
       next: (tickets) => {
+        console.log(tickets);
         if (!this.authService.isLoggedIn) {
           tickets.forEach(ticket => {
             this.storageService.storeGuestTicket({
@@ -65,9 +66,44 @@ export class CheckoutComponent {
               attendee_email: ticket.attendee_email
             });
           });
+
         }
         this.isLoading = false;
-        this.router.navigate(['/confirmation'], { state: { tickets } });
+        let url = (tickets as any).authorization_url;
+        window.open(url, "_blank")
+        // this.router.navigate(['/confirmation'], { state: { tickets } });
+      },
+      error: () => {
+        this.isLoading = false;
+        alert('Purchase failed');
+      }
+    });
+  }
+
+
+  submitPurchaseAsGuest() {
+    this.isLoading = true;
+
+    this.ticketService.purchaseTicketsAsGuest(this.purchaseData).subscribe({
+      next: (tickets) => {
+        console.log(tickets);
+        if (!this.authService.isLoggedIn) {
+          tickets.forEach(ticket => {
+            this.storageService.storeGuestTicket({
+              id: ticket.id,
+              event_id: ticket.event_id,
+              ticket_type_id: ticket.ticket_type_id,
+              qrCode: ticket.qr_code,
+              attendee_name: ticket.attendee_name,
+              attendee_email: ticket.attendee_email
+            });
+          });
+
+        }
+        this.isLoading = false;
+        let url = (tickets as any).authorization_url;
+        window.open(url, "_blank")
+        // this.router.navigate(['/confirmation'], { state: { tickets } });
       },
       error: () => {
         this.isLoading = false;

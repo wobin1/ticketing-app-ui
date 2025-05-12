@@ -10,7 +10,7 @@
   </div>
 
   <form *ngIf="showForm || authService.isLoggedIn" (ngSubmit)="submitPurchase()" class="space-y-6">
-    <div>
+    <!-- <div>
       <h3 class="text-lg font-medium">Billing Information</h3>
       <app-input
         label="Cardholder Name"
@@ -49,7 +49,9 @@
         [disabled]="!isFormValid">
         Complete Purchase
       </app-button>
-    </div>
+    </div> -->
+    <button *ngIf="!isGuest" (click)="submitPurchase()" class="px-4 py-3 text-small border text-white">Make Payment</button>
+    <button *ngIf="isGuest" (click)="submitPurchaseAsGuest()" class="px-4 py-3 text-small border text-white">Make Payment</button>
   </form>
 
   <app-login [showLoginModal]="showLoginModal"></app-login>

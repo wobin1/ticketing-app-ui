@@ -48,6 +48,17 @@ export class AuthService {
       );
   }
 
+  loginGuest(username: string, password: string): Observable<AuthResponse> {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/login`, formData)
+      .pipe(
+        tap(response => this.handleAuthResponseAsGuest(response))
+      );
+  }
+
   register(user: { email: string; password: string; firstName?: string; lastName?: string }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/auth/register`, user)
       .pipe(
@@ -65,6 +76,12 @@ export class AuthService {
   private handleAuthResponse(response: AuthResponse): void {
     this.storageService.setItem('user', JSON.stringify(response.user));
     this.storageService.setItem('token', response.token);
+    this.currentUserSubject.next(response.user);
+  }
+
+  private handleAuthResponseAsGuest(response: AuthResponse): void {
+    this.storageService.setItem('guestUser', JSON.stringify(response.user));
+    this.storageService.setItem('guestToken', response.token);
     this.currentUserSubject.next(response.user);
   }
 }

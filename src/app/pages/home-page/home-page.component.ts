@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventService } from '../../services/event.service';
@@ -17,11 +18,14 @@ export class HomePageComponent {
   eventService = inject(EventService);
   events: Event[] = [];
   searchQuery = '';
+  authService = inject(AuthService);
 
   ngOnInit() {
     this.eventService.getEvents().subscribe(events => {
       this.events = events;
     });
+
+    this.loginGuest();
   }
 
   searchEvents() {
@@ -34,6 +38,18 @@ export class HomePageComponent {
         this.events = events;
       });
     }
+  }
+
+
+  loginGuest() {
+    this.authService.loginGuest('user@example.com', 'userpassword').subscribe({
+      next: () => {
+        console.log('guest Logged in')
+      },
+      error: () => {
+        alert('Login failed');
+      }
+    });
   }
 
 }

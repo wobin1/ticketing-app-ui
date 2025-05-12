@@ -20,6 +20,7 @@ export class HeaderComponent {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']); // Navigate to home after logout
+    window.location.reload();
   }
 
   toggleMobileMenu(): void {
