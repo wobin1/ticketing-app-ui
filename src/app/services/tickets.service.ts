@@ -11,6 +11,7 @@ export class TicketService {
   private http = inject(HttpClient);
   private baseUrl = `${environment.baseUrl}/tickets`;
   private token:any;
+  storage = inject(StorageService);
 
 
 
@@ -22,6 +23,13 @@ export class TicketService {
   getUserTickets(): Observable<Ticket[]> {
     const headers = { 'Authorization': `Bearer ${this.token}` };
     return this.http.get<Ticket[]>(`${this.baseUrl}/user`, { headers });
+  }
+
+  getUserGuestTickets(): Observable<Ticket[]> {
+    let guestToken = localStorage.getItem('guestToken');
+    let ticket_ids = this.storage.getGuestTickets();
+    const headers = { 'Authorization': `Bearer ${guestToken}` };
+    return this.http.post<Ticket[]>(`${this.baseUrl}/guest-tickets`, ticket_ids, { headers });
   }
 
   purchaseTickets(purchase: TicketPurchase): Observable<Ticket[]> {
@@ -54,4 +62,5 @@ export class TicketService {
     const headers = { 'Authorization': `Bearer ${this.token}` };
     return this.http.post<Ticket>(`${this.baseUrl}/cancel/${ticketId}`, {}, { headers });
   }
-}
+}import { StorageService } from './storage.service';
+

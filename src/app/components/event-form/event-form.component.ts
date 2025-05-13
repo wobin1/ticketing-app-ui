@@ -21,6 +21,8 @@ export class EventFormComponent {
 
   eventForm: FormGroup;
   isEditMode = false;
+  isSubmitting = false;
+
 
   constructor() {
     this.eventForm = this.fb.group({
@@ -69,12 +71,13 @@ export class EventFormComponent {
   }
 
   onSubmit() {
-    if (this.eventForm.valid) {
+    if (this.eventForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
       const formValue = this.eventForm.value;
       const eventData: Partial<Event> = {
         ...formValue,
         date: new Date(formValue.date),
-        ticket_types: formValue.ticket_types.map((tt: any) => ({  // Changed from ticketTypes
+        ticket_types: formValue.ticket_types.map((tt: any) => ({
           id: tt.id,
           name: tt.name,
           description: tt.description,
@@ -83,6 +86,7 @@ export class EventFormComponent {
         }))
       };
       this.submit.emit(eventData);
+      // Reset submission lock after a short delay
     }
   }
 

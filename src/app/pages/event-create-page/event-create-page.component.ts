@@ -16,9 +16,13 @@ export class EventCreatePageComponent {
   eventService = inject(EventService);
   router = inject(Router);
   isLoading = false;
+  submit = false;
 
   createEvent(eventData: Partial<Event>) {
-    this.isLoading = true;
+    console.log('Creating event with data:', eventData);
+    if(!this.submit){
+      this.isLoading = true;
+      this.submit = true;
     this.eventService.createEvent(eventData).subscribe({
       next: () => {
         this.isLoading = false;
@@ -29,6 +33,7 @@ export class EventCreatePageComponent {
         alert(`Error: ${error.message || 'Failed to create event'}`);
       }
     });
+    }
   }
 
   cancel() {

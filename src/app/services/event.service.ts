@@ -168,6 +168,7 @@ export class EventService {
 
 
   createEvent(event: Partial<Event>): Observable<Event> {
+    console.log('Creating event token:', this.token);
     const headers = { 'Authorization': `Bearer ${this.token}` };
     return this.http.post<Event>(this.baseUrl, event, { headers });
   }

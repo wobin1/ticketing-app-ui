@@ -51,23 +51,10 @@ export class CheckoutComponent {
 
   submitPurchase() {
     this.isLoading = true;
-
+    console.log('purchasing ticket as user')
     this.ticketService.purchaseTickets(this.purchaseData).subscribe({
       next: (tickets) => {
         console.log(tickets);
-        if (!this.authService.isLoggedIn) {
-          tickets.forEach(ticket => {
-            this.storageService.storeGuestTicket({
-              id: ticket.id,
-              event_id: ticket.event_id,
-              ticket_type_id: ticket.ticket_type_id,
-              qrCode: ticket.qr_code,
-              attendee_name: ticket.attendee_name,
-              attendee_email: ticket.attendee_email
-            });
-          });
-
-        }
         this.isLoading = false;
         let url = (tickets as any).authorization_url;
         window.open(url, "_blank")
@@ -83,25 +70,17 @@ export class CheckoutComponent {
 
   submitPurchaseAsGuest() {
     this.isLoading = true;
+    console.log('buying ticket as guest')
 
     this.ticketService.purchaseTicketsAsGuest(this.purchaseData).subscribe({
-      next: (tickets) => {
-        console.log(tickets);
-        if (!this.authService.isLoggedIn) {
-          tickets.forEach(ticket => {
-            this.storageService.storeGuestTicket({
-              id: ticket.id,
-              event_id: ticket.event_id,
-              ticket_type_id: ticket.ticket_type_id,
-              qrCode: ticket.qr_code,
-              attendee_name: ticket.attendee_name,
-              attendee_email: ticket.attendee_email
-            });
-          });
-
+      next: (tickets:any) => {
+        console.log('tickets data', tickets);
+        if (this.isGuest) {
+          this.storageService.storeGuestTicket(tickets.reference);
         }
         this.isLoading = false;
         let url = (tickets as any).authorization_url;
+        console.log('url to route to', url);
         window.open(url, "_blank")
         // this.router.navigate(['/confirmation'], { state: { tickets } });
       },

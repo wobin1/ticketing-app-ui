@@ -29,6 +29,10 @@ export const routes: Routes = [
         component: DashboardPageComponent,
         canActivate: [AuthGuard]
       },
+      {
+        path: 'guest-dashboard',
+        component: DashboardPageComponent
+      },
       { path: 'check-in', component: CheckinPageComponent },
       {
         path: 'admin',

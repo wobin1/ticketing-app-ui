@@ -5,11 +5,11 @@
     <div class="flex justify-between mb-4">
       <app-button variant="primary" (onClick)="showLoginModal = true">Log In</app-button>
       <app-button variant="secondary" (onClick)="showRegisterModal = true">Create Account</app-button>
-      <!-- <app-button variant="outline" (onClick)="continueAsGuest()">Continue as Guest</app-button> -->
+      <app-button variant="outline" (onClick)="continueAsGuest()">Continue as Guest</app-button>
     </div>
   </div>
 
-  <form *ngIf="showForm || authService.isLoggedIn" (ngSubmit)="submitPurchase()" class="space-y-6">
+  <form *ngIf="showForm || authService.isLoggedIn" class="space-y-6">
     <!-- <div>
       <h3 class="text-lg font-medium">Billing Information</h3>
       <app-input
@@ -51,8 +51,8 @@
       </app-button>
     </div> -->
     <button *ngIf="!isGuest" (click)="submitPurchase()" class="px-4 py-3 text-small border text-white">Make Payment</button>
-    <button *ngIf="isGuest" (click)="submitPurchaseAsGuest()" class="px-4 py-3 text-small border text-white">Make Payment</button>
   </form>
+  <button *ngIf="isGuest" (click)="submitPurchaseAsGuest()" class="px-4 py-3 text-small border text-white">Make Payment As Guest</button>
 
   <app-login [showLoginModal]="showLoginModal"></app-login>
 

@@ -24,6 +24,13 @@
             My Tickets
           </a>
           <a
+            *ngIf="!authService.isLoggedIn"
+            [routerLink]="['/guest-dashboard']"
+            routerLinkActive="text-blue-500 border-b-2 border-blue-500"
+            class="inline-flex items-center px-1 pt-1 hover:text-white transition-colors duration-200">
+            Guest Tickets
+          </a>
+          <a
             *ngIf="authService.isLoggedIn && authService.currentUser?.role === 'admin'"
             [routerLink]="['/admin']"
             routerLinkActive="text-blue-500 border-b-2 border-blue-500"

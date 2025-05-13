@@ -24,6 +24,7 @@ export class AuthService {
     console.log('baseUrl', this.baseUrl);
     // Load user from localStorage on service init
     const user = this.storageService.getItem('user');
+    console.log('current user', user)
     if (user) {
       this.currentUserSubject.next(JSON.parse(user));
     }
@@ -82,6 +83,6 @@ export class AuthService {
   private handleAuthResponseAsGuest(response: AuthResponse): void {
     this.storageService.setItem('guestUser', JSON.stringify(response.user));
     this.storageService.setItem('guestToken', response.token);
-    this.currentUserSubject.next(response.user);
+    // this.currentUserSubject.next(response.user);
   }
 }

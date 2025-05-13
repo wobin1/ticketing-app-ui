@@ -31,13 +31,15 @@ export class StorageService {
   }
 
   // Guest ticket storage
-  storeGuestTicket(ticketData: any): void {
+  storeGuestTicket(ticketId: string): void {
     const guestTickets = this.getGuestTickets();
-    guestTickets.push({
-      ...ticketData,
-      storedAt: new Date().toISOString()
-    });
-    this.setItem('guestTickets', JSON.stringify(guestTickets));
+    if (!guestTickets.some(ticket => ticket.id === ticketId)) {
+      guestTickets.push({
+        id: ticketId,
+        storedAt: new Date().toISOString()
+      });
+      this.setItem('guestTickets', JSON.stringify(guestTickets));
+    }
   }
 
   getGuestTickets(): any[] {
