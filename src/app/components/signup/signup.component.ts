@@ -29,7 +29,8 @@ export class SignupComponent {
         this.showRegisterModal = false;
         this.showForm = true;
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        this.authService.logout();
+        this.router.navigate(['/login']);
       },
       error: () => {
         this.isLoading = false;
